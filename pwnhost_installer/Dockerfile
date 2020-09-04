@@ -23,28 +23,12 @@ RUN 	dpkg --add-architecture i386 && \
 	# system management
 	procps p7zip-full sudo
 
-# user account setup
-RUN 	useradd -mN -s /bin/zsh $UNAME && \
-	mkdir /home/$UNAME/.config && \ 
-	echo "pwnbox" > /etc/hostname && \
-	usermod -aG sudo $UNAME
-
-# setup user interface
-RUN	su $UNAME && cd /home/$UNAME && \
-	sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" && \
-	# cloning dotfiles
-	git clone https://github.com/leongross/dotfiles.git 
-
 # pip installs
 RUN 	su $UNAME && cd /home/$UNAME && \
 	pip3 install --pre unicorn && \ 
 	pip3 install requests keystone-engine capstone ropper pwntools
 
-# github project and tools cloning
-RUN	su $UNAME && cd /home/$UNAME && \
-	mkdir repos && cd repos && \
-	wget -O ~/.gdbinit-gef.py -q http://gef.blah.cat/py && \
-	echo source ~/.gdbinit-gef.py >> ~/.gdbinit
+RUN	"$(curl -fsSL https://raw.githubusercontent.com/leongross/dockerfiles/master/pwnhost_installer/installer.sh)" | sh
 
 WORKDIR	/home/$UNAME
 EXPOSE 22 80 443
