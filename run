@@ -1,2 +1,2 @@
 #!/bin/sh
-docker run --rm -v $PWD:/pwd --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -d --name pwnhost -i pwnhost && docker exec -it pwnhost /bin/zsh
+docker run --rm -v $PWD/share:/share --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -d --name pwnhost -i pwnhost

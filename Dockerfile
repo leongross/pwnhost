@@ -30,7 +30,8 @@ RUN	echo "nameserver 1.1.1.1" >> /etc/resolve.conf
 # user account setup
 RUN 	useradd -mN -s /bin/zsh $UNAME && \
 	mkdir /home/$UNAME/.config && \ 
-	echo "pwnhost" > /etc/hostname 
+	echo "pwnhost" > /etc/hostname && \
+	mkdir /share && chown $UNAME /share
 	#usermod -aG sudo $UNAME
 
 USER	$UNAME
