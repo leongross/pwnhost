@@ -7,6 +7,7 @@ ENV 	TZ=Europe/Moscow
 
 ARG 	UNAME='pwny'
 RUN	echo "root:root" | chpasswd
+RUN	echo "pwny:pwny" | chpasswd
 
 # inital system setup
 RUN 	dpkg --add-architecture i386 && \
@@ -14,7 +15,7 @@ RUN 	dpkg --add-architecture i386 && \
 	apt install apt-utils && \
 	apt install -y man-db vim zsh git \
 	# binary tools
-	build-essential strace ltrace gdb gdb-multiarch gcc gcc-multilib g++ clang llvm make \
+	build-essential strace ltrace gdb gdb-multiarch gcc gcc-multilib g++ clang llvm make qemu \
 	# web tools
 	netcat curl wget net-tools libssl-dev openssh-server iputils-ping tcpdump dnsutils\ 
 	# libraries
@@ -50,6 +51,7 @@ RUN	wget -O ~/.gdbinit-gef.py -q http://gef.blah.cat/py && \
 
 # add home/user/.local/bin to path
 RUN	export PATH="/home/user/.local/bin:/home/user/bin:$PATH"
+RUN	service sshd start
 
 WORKDIR		/home/$UNAME
 EXPOSE 		22 80 443
