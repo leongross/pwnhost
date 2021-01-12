@@ -1,7 +1,7 @@
 # pwnhost - A quick and dirty CTF Container
 
 # Table of Contents
-1. [Installation](#setup)
+1. [Installation](#installation)
   1. [Build from source](#from-source)
   2. [Pull from Dockerhub](#from-docker-hub)
 2. [Usage](#usage)
@@ -50,7 +50,7 @@ root:root
 ```
 
 ## Packages
-Because the purpouse of this image is to start right hacking without a setup some packages I consider to be usefull will be preinstalled.
+Because the purpouse of this image is to start right hacking without a setup some packages I consider to be useful will be preinstalled.
 | Package | Source | Docs |
 ---|---|---|
 oh-my-zsh| https://github.com/ohmyzsh/ohmyzsh/ | https://github.com/ohmyzsh/ohmyzsh/wiki
