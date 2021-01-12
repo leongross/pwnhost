@@ -1,4 +1,2 @@
 #!/bin/sh
-
-docker run --rm -v $PWD:/pwd --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -d --name pwnhost_full -i pwnhost:full && docker exec -it pwnhost_full /bin/zsh
-
+docker run --rm -v $PWD:/pwd --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -d --name pwnhost -i pwnhost && docker exec -it pwnhost /bin/zsh
