@@ -57,10 +57,7 @@ Because the purpouse of this image is to start right hacking without a setup som
 ---|---|---|
 oh-my-zsh| https://github.com/ohmyzsh/ohmyzsh/ | https://github.com/ohmyzsh/ohmyzsh/wiki
 git| https://github.com/git/git | https://git-scm.com/doc
-qemu| https://github.com/qemu/qemu | https://www.qemu.org/docs/master/
-llvm | https://releases.llvm.org/download.html#11.0.0 | https://llvm.org/docs/
 pwntools | https://github.com/Gallopsled/pwntools | https://docs.pwntools.com/en/latest/
-pip3 | https://pip.pypa.io/en/stable/ | https://pip.pypa.io/en/stable/user_guide/
-gef | https://github.com/hugsy/gef | https://gef.readthedocs.io/en/master/
+pip3 | https://pip.pypa.io/en/stable/ | https://pip.pypa.io/en/stable/user\_guide/
 
 
