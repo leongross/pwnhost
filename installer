@@ -1,0 +1,42 @@
+#!/bin/sh
+
+apt update
+
+if ! [[ -z "{$EMU}" ]];then
+    apt install -y qemu qemu-kvm
+fi
+
+if ! [[ -z "{$ARCH_32}" ]];then
+    dpkg --add-architecture i386 
+
+if ! [[ -z "{$PWN}" ]];then
+    apt install -y 
+    pip install ropper
+fi
+
+if ! [[ -z "{$BIN}" ]];then
+    apt install -y llvm strace ltrace gdb gdb-multiarch gcc gcc-multilib g++ clang make
+    wget -O ~/.gdbinit-gef.py -q http://gef.blah.cat/py && \
+    echo source ~/.gdbinit-gef.py >> ~/.gdbinit
+fi
+
+
+if ! [[ -z "{$WLST}" ]];then
+    mkdir /wlst/
+    wget -qO- https://github.com/praetorian-inc/Hob0Rules/blob/master/wordlists/rockyou.txt.gz\?raw=true| gunzip -c > /wlst/rockyou.txt
+fi
+
+
+if ! [[ -z "{$ALL}" ]];then
+    dpkg --add-architecture i386 
+    apt install -y qemu qemu-kvm llvm strace ltrace gdb gdb-multiarch gcc gcc-multilib g++ clang make
+    pip install ropper
+
+    wget -O ~/.gdbinit-gef.py -q http://gef.blah.cat/py && \
+    echo source ~/.gdbinit-gef.py >> ~/.gdbinit
+
+    mkdir /wlst/
+    wget -qO- https://github.com/praetorian-inc/Hob0Rules/blob/master/wordlists/rockyou.txt.gz\?raw=true| gunzip -c > /wlst/rockyou.txt
+fi
+
+apt upgrade -y 

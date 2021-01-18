@@ -10,20 +10,17 @@ RUN	echo "root:root" | chpasswd
 RUN	echo "pwny:pwny" | chpasswd
 
 # inital system setup
-RUN 	dpkg --add-architecture i386 && \
-	apt update && apt upgrade -y && \
+RUN 	apt update && apt upgrade -y && \
 	apt install apt-utils && \
-	apt install -y man-db vim zsh git \
-	# binary tools
-	build-essential strace ltrace gdb gdb-multiarch gcc gcc-multilib g++ clang llvm make qemu \
+	apt install -y man-db vim zsh git procps p7zip-full sudo \
+	# build tools
+	build-essential  \
 	# web tools
 	netcat curl wget net-tools libssl-dev openssh-server iputils-ping tcpdump dnsutils\ 
 	# libraries
 	libpcre3-dev libdb-dev libxt-dev libxaw7-dev libffi-dev libc6:i386 libncurses5:i386 libstdc++6:i386 \
 	# python
 	python3 python3-pip python3-dev python3-venv \
-	# system management
-	procps p7zip-full sudo 
 
 # Updating network cache
 RUN	echo "nameserver 1.1.1.1" >> /etc/resolve.conf 

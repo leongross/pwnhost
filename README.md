@@ -21,6 +21,13 @@ docker build . -t pwnhost
 docker pull leongross/pwnhost
 ```
 
+### Additional Content
+There are several options preset and ready for installtion. Each option inherits a different set of libraries and tools. These Options are passed via the `--env <LIST>` argument or an `--env-file <FILE>`.
+Currently these options are available:
+Option | Packages
+---|---|---|
+ALL |
+PWN | 
 
 ## Usage
 Here one example on how to run the container.
@@ -34,11 +41,6 @@ Alternatively you can use the [run](./run) script provided in the root of the pr
 Use `docker exec` to launch an interactive shell
 ```bash
 docker exec -it pwnhost:latest zsh
-```
-or connect to the virtual host via shh
-
-```bash
-ssh pwny@pwnhost
 ```
 
 ### Credentials
