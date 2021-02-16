@@ -21,9 +21,25 @@ docker build . -t pwnhost
 docker pull leongross/pwnhost
 ```
 
+### Additional Content
+There are several options preset and ready for installtion. Each option inherits a different set of libraries and tools. These Options are passed via the `--env <LIST>` argument or an `--env-file <FILE>`.
+Currently these options are available:
+| Option | Packages | 
+|---|---|
+ARCH\_32 | adds 32-bit support 
+PWN | ropper, pwntools
+BIN | gef, binutils
+WLST | rockyou.txt
+WEB | netcat, curl, wget, ...
+ALL | ARCH\_32, PWN, BIN, WLST, WEB
+
+To install a package, set the corresponding environment variable to `1`. One example could be:
+```bash
+docker run -v$PWD/share:/share -cap-add=SYS_PTRACE --security-opt seccomp=unconfined -e PWN=1 WEB=1 -d --name:pwnhost -i pwnhost
+```
 
 ## Usage
-Here one example on how to run the container.
+One example on how to run the container.
 ```bash
 docker run --rm -v $PWD/share:/share --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -d --name pwnhost -i pwnhost
 ```
@@ -35,11 +51,6 @@ Use `docker exec` to launch an interactive shell
 ```bash
 docker exec -it pwnhost:latest zsh
 ```
-or connect to the virtual host via shh
-
-```bash
-ssh pwny@pwnhost
-```
 
 ### Credentials
 The `Dockerfile` will automatically create the user `pwny` specified by the `ARG` variable `UNAME`. You can change it when building the image locally.
@@ -50,15 +61,11 @@ root:root
 ```
 
 ## Packages
-Because the purpouse of this image is to start right hacking without a setup some packages I consider to be useful will be preinstalled.
+Because the purpouse of this image is to start right hacking without a big setup, some packages I considered to be useful will be preinstalled.
 | Package | Source | Docs |
----|---|---|
+|---|---|---|
 oh-my-zsh| https://github.com/ohmyzsh/ohmyzsh/ | https://github.com/ohmyzsh/ohmyzsh/wiki
 git| https://github.com/git/git | https://git-scm.com/doc
-qemu| https://github.com/qemu/qemu | https://www.qemu.org/docs/master/
-llvm | https://releases.llvm.org/download.html#11.0.0 | https://llvm.org/docs/
-pwntools | https://github.com/Gallopsled/pwntools | https://docs.pwntools.com/en/latest/
-pip3 | https://pip.pypa.io/en/stable/ | https://pip.pypa.io/en/stable/user_guide/
-gef | https://github.com/hugsy/gef | https://gef.readthedocs.io/en/master/
+pip3 | https://pip.pypa.io/en/stable/ | https://pip.pypa.io/en/stable/user\_guide/
 
 
