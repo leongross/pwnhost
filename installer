@@ -1,42 +1,99 @@
-#!/bin/sh
+#!/bin/bash
+
+# colors
+R='\033[0;31m'
+G='\033[0;32m'
+N='\033[0m'
 
 apt update
 
-if ! [[ -z "{$EMU}" ]];then
-    apt install -y qemu qemu-kvm
-fi
+function _DBG()
+{
+    printf "\n\n\n\n\n\n\n\n\n\n DEBUG \n\n\n\n\n\n\n\n\n\n"
+}
 
-if ! [[ -z "{$ARCH_32}" ]];then
-    dpkg --add-architecture i386 
+function I_EMU()
+{
+    apt install -y qemu qemu-kvm && printf "${G}[+] Installed EMU\n${N}" || printf "${R}[-] Cannot install EMU\n${N}"
+}
 
-if ! [[ -z "{$PWN}" ]];then
-    apt install -y 
-    pip install ropper
-fi
 
-if ! [[ -z "{$BIN}" ]];then
+function I_ARCH_32()
+{
+    dpkg --add-architecture i386 && sudo apt-get install lib32z1 && sudo apt update -y && printf "${G}[+] Added i386 support and libs\n${N}" || printf "${R}[-] Cannot add i386\n${N}"
+}
+
+
+function I_PWN()
+{
+    apt install -y python3 -m pip install --upgrade ropper pwntools && printf "${G}[+] Installed PWN\n${N}" || printf "${R}[-] Cannot install PWN\n${N}"
+}
+
+function I_BIN()
+{
+    apt-get install -y binutils-$ARCH-linux-gnu
     apt install -y llvm strace ltrace gdb gdb-multiarch gcc gcc-multilib g++ clang make
     wget -O ~/.gdbinit-gef.py -q http://gef.blah.cat/py && \
     echo source ~/.gdbinit-gef.py >> ~/.gdbinit
-fi
+}
 
-
-if ! [[ -z "{$WLST}" ]];then
+function I_WLST()
+{
     mkdir /wlst/
-    wget -qO- https://github.com/praetorian-inc/Hob0Rules/blob/master/wordlists/rockyou.txt.gz\?raw=true| gunzip -c > /wlst/rockyou.txt
+    wget -qO- https://github.com/praetorian-inc/Hob0Rules/blob/master/wordlists/rockyou.txt.gz\?raw=true| gunzip -c > /wlst/rockyou.txt 
+}
+
+function I_WEB()
+{
+    apt install -y netcat curl wget net-tools libssl-dev openssh-server iputils-ping tcpdump dnsutils && printf "${G}[+] Installed WEB\n${N}" || printf "${R}[-] Cannot install WEB\n${N}"
+}
+
+function I_ALL()
+{
+    I_ARCH_32
+    I_PWN
+    I_BIN
+    I_WSLT
+    I_WEB
+}
+
+if [[ "{$ALL}" = 1 ]];then
+    printf "WTF WHY HERE"
+    I_ALL
+    apt upgrade -y
+    rm -rf /var/lib/apt/lists/*
+    exit 1
+fi
+
+if [[ "${DBG}" = 1 ]];then
+    _DBG
+fi
+
+if [[ "{$EMU}" = 1 ]];then
+    I_EMU
+fi
+
+if [[ "{$ARCH_32}" = 1 ]];then
+    I_ARCH_32
+fi
+
+if [[ "{$PWN}" = 1 ]];then
+    I_PWN
+fi
+
+if [[ "{$BIN}" = 1 ]];then
+    I_BIN
+fi
+
+if [[ "{$WLST}" = 1 ]];then
+    I_WLST
+fi
+
+if [[ "{$WEB}" = 1 ]];then
+    I_WEB
 fi
 
 
-if ! [[ -z "{$ALL}" ]];then
-    dpkg --add-architecture i386 
-    apt install -y qemu qemu-kvm llvm strace ltrace gdb gdb-multiarch gcc gcc-multilib g++ clang make
-    pip install ropper
-
-    wget -O ~/.gdbinit-gef.py -q http://gef.blah.cat/py && \
-    echo source ~/.gdbinit-gef.py >> ~/.gdbinit
-
-    mkdir /wlst/
-    wget -qO- https://github.com/praetorian-inc/Hob0Rules/blob/master/wordlists/rockyou.txt.gz\?raw=true| gunzip -c > /wlst/rockyou.txt
-fi
-
-apt upgrade -y 
+# apt cache cleanup
+apt upgrade -y
+rm -rf /var/lib/apt/lists/*
